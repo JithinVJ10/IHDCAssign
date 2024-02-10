@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function OTPModel({setShowModal,showModal, OTP,setOTP, action}) {
+export default function OTPModel({setShowModal,showModal, verificationCode,setVerificationCode, action}) {
  
   return (
     <>
@@ -15,7 +15,7 @@ export default function OTPModel({setShowModal,showModal, OTP,setOTP, action}) {
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                   <h3 className="text-3xl font-semibold">
-                    Warning
+                    Enter OTP
                   </h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -30,8 +30,9 @@ export default function OTPModel({setShowModal,showModal, OTP,setOTP, action}) {
                 <div className="relative p-6 flex-auto">
                   <input 
                     type="number" 
-                    value={OTP}
-                    onChange={(e)=>setOTP(e.target.value)}
+                    value={verificationCode}
+                    onChange={(e)=>setVerificationCode(e.target.value)}
+                    className="border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
                   />
                 </div>
                 {/*footer*/}

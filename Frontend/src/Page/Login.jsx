@@ -1,33 +1,49 @@
 import React, { useState } from 'react'
 import OTPModel from '../Components/OTPModel'
-import { sendOTP, verifyOTP } from '../Twilio/Twilio'
+import { axiosInstance } from '../axios/axiosIntance'
+import {toast , ToastContainer} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+import {useNavigate} from 'react-router-dom'
+import { HOME } from '../Route/RoutePath';
+import Header from '../Components/Header';
+
 
 const Login = () => {
     const [countryCode,setCountryCode] = useState()
     const [phoneNumber,setPhoneNumber] = useState()
     const [name,setName] = useState('')
     const [email,setEmail] = useState('')
-    const [OTP,setOTP] = useState('')
+    const [verificationCode,setVerificationCode] = useState()
 
     const [showModal, setShowModal] = useState(false);
+
+    const navigate = useNavigate()
 
 
     const handleSubmit = (e) =>{
         e.preventDefault()
         try {
-            sendOTP(phoneNumber,countryCode)
+           axiosInstance.post('/otp/SendOTP',{phoneNumber,countryCode}).then((res)=>{
+            if (res.data.success) {
+                toast.success("OTP Sent Successfully")
+                setShowModal(true)
+            }
+           })
         } catch (error) {
             console.log(error)
         }
-        setShowModal(true)
+        
     }
 
     const action = ()=>{
         try {
-            if (verifyOTP(OTP,phoneNumber,countryCode)) {
-                setShowModal(false)
-                console.log(OTP)
-            }
+            axiosInstance.post('/otp/OTPverify',{phoneNumber,countryCode,verificationCode}).then((res)=>{
+                if (res.data.success) {
+                    toast.success("Success")
+                    
+                    navigate(HOME)
+                }
+            })
         } catch (error) {
             console.log(error)
         }
@@ -35,8 +51,12 @@ const Login = () => {
 
   return (
     <>
+    <Header/>
       <main className='flex'>
-        <OTPModel showModal={showModal} setShowModal={setShowModal} action={action} OTP={OTP} setOTP={setOTP} />
+      <ToastContainer/>
+        <OTPModel showModal={showModal} setShowModal={setShowModal} action={action} 
+            verificationCode={verificationCode} setVerificationCode={setVerificationCode}
+        />
         <div className='px-32'>
             <div className='py-6'>
                 <p className='text-5xl text-cyan-400'>Unlock Exclusive Benefits</p>
@@ -47,13 +67,13 @@ const Login = () => {
                 <div className=''>
                 <select 
                     id="countryCode"
-                    onChange={(e)=>setCountryCode(e.target.value)} 
-                    className="bg-gray-50 border  border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    onChange={(e) => setCountryCode(e.target.value)} 
+                    value={countryCode} // Add this line to bind the selected value to the state
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
-                    
-                    <option selected value={countryCode}>+91 India</option>
-                    <option value={countryCode}>+1 USA</option>
-                    
+                    <option selected value="none">Choose</option>
+                    <option value="+91">+91 India</option>
+                    <option value="+1">+1 USA</option>
                 </select>
                 </div>
 

@@ -18,17 +18,17 @@ const client = twilio(accountSid, authToken);
 const sendOTP = async (req, res, next) => {
     console.log("sms");
       try {
-        const { phone } = req.body;
+        const { phoneNumber, countryCode } = req.body;
         
 
           const otpResponse = await client.verify.v2
             .services(serviceSid)
             .verifications.create({
-              to: "+91"+phone,
+              to: countryCode+phoneNumber,
               channel: "sms",
             });
          
-          res.status(201).json({ suceess:true, phone, message: "OTP send successfully" });
+          res.status(201).json({ success:true, phoneNumber, message: "OTP send successfully" });
         
        
       } catch (error) {
@@ -40,12 +40,11 @@ const sendOTP = async (req, res, next) => {
 
 //verify OTP
 const verifyOTP = async (req, res,next) => {
-    const verificationCode =req.body.verificationCode;
-    const phone = req.body.phone;
-    console.log(phone);
+    const { phoneNumber, countryCode, verificationCode } = req.body;
+    console.log(phoneNumber);
     
   
-    if (!phone) {
+    if (!phoneNumber) {
         const error = new Error("Phone number is required");
         error.statusCode = 409; // You can set a custom status code if needed
         throw error; // Throw the error
@@ -56,12 +55,12 @@ const verifyOTP = async (req, res,next) => {
       console.log(serviceSid);
       const verification_check = await client.verify.v2
         .services(serviceSid)
-        .verificationChecks.create({ to : '+91' + phone , code : verificationCode})
+        .verificationChecks.create({ to : countryCode + phoneNumber , code : verificationCode})
   
       if (verification_check.status === 'approved') {
         // If the verification is successful this
-
-        res.status(201).json({suceess:true, message: "Successfully verified" });
+        console.log("sucess")
+        res.status(201).json({success:true, message: "Successfully verified" });
       } else {
         const error = new Error("OTP Verification faild");
         error.statusCode = 409; // You can set a custom status code if needed
