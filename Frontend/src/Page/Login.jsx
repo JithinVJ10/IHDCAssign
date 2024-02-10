@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
+import OTPModel from '../Components/OTPModel'
 
 const Login = () => {
     const [countryCode,setCountryCode] = useState()
     const [phoneNumber,setPhoneNumber] = useState()
     const [name,setName] = useState('')
     const [email,setEmail] = useState('')
+    const [OTP,setOTP] = useState('')
+
+    const [showModal, setShowModal] = useState(false);
 
 
     const handleSubmit = (e) =>{
@@ -14,11 +18,22 @@ const Login = () => {
         } catch (error) {
             console.log(error)
         }
+        setShowModal(true)
+    }
+
+    const action = ()=>{
+        try {
+            setShowModal(false)
+            console.log(OTP)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
   return (
     <>
       <main className='flex'>
+        <OTPModel showModal={showModal} setShowModal={setShowModal} action={action} OTP={OTP} setOTP={setOTP} />
         <div className='px-32'>
             <div className='py-6'>
                 <p className='text-5xl text-cyan-400'>Unlock Exclusive Benefits</p>
