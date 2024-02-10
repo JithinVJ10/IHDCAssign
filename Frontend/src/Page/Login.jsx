@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import OTPModel from '../Components/OTPModel'
+import { sendOTP, verifyOTP } from '../Twilio/Twilio'
 
 const Login = () => {
     const [countryCode,setCountryCode] = useState()
@@ -14,7 +15,7 @@ const Login = () => {
     const handleSubmit = (e) =>{
         e.preventDefault()
         try {
-            
+            sendOTP(phoneNumber,countryCode)
         } catch (error) {
             console.log(error)
         }
@@ -23,8 +24,10 @@ const Login = () => {
 
     const action = ()=>{
         try {
-            setShowModal(false)
-            console.log(OTP)
+            if (verifyOTP(OTP,phoneNumber,countryCode)) {
+                setShowModal(false)
+                console.log(OTP)
+            }
         } catch (error) {
             console.log(error)
         }
