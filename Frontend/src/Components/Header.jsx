@@ -1,13 +1,14 @@
 import React from 'react'
+import realEstate from '../assets/real-estate-house.png'
 
 const Header = () => {
   return (
     <>
-      <header className='flex py-5 m-5 bg-zinc-200'>
-        <div className='px-64'>
-            <p>Img</p>
+      <header className='flex m-3 bg-zinc-200 h-16'>
+        <div className='px-60'>
+            <img src={realEstate} alt="realEstateImg" width={90} />
         </div>
-        <div className='px-40'>
+        <div className='px-40 py-5'>
             <p className='text-lg font-semibold'>
                 XYZ SYSTEMS LLP.
             </p>

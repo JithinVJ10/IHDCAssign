@@ -49,7 +49,7 @@ export default function OTPModel({setShowModal,showModal, verificationCode,setVe
                     type="button"
                     onClick={() => action()}
                   >
-                    Save Changes
+                    CONTINUE
                   </button>
                 </div>
               </div>

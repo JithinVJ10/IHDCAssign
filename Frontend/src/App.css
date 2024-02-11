@@ -1,0 +1,14 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.img-slider-img {
+    object-fit: cover;
+    width: 100px;
+    height: 70px;
+    display: block;
+    flex-shrink: 0;
+    flex-grow: 0;
+  }

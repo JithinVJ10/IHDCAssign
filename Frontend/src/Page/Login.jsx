@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import OTPModel from '../Components/OTPModel'
 import { axiosInstance } from '../axios/axiosIntance'
 import {toast , ToastContainer} from 'react-toastify'
@@ -6,9 +6,19 @@ import 'react-toastify/dist/ReactToastify.css';
 import {useNavigate} from 'react-router-dom'
 import { HOME } from '../Route/RoutePath';
 import Header from '../Components/Header';
+import celeb from '../assets/celeb.png'
 
 
 const Login = () => {
+
+    const navigate = useNavigate()
+    const user = JSON.parse(localStorage.getItem('name'))
+
+    useEffect(()=>{
+      if (user) {
+        navigate(HOME)
+      }  
+    },[])
     const [countryCode,setCountryCode] = useState()
     const [phoneNumber,setPhoneNumber] = useState()
     const [name,setName] = useState('')
@@ -17,7 +27,7 @@ const Login = () => {
 
     const [showModal, setShowModal] = useState(false);
 
-    const navigate = useNavigate()
+    
 
 
     const handleSubmit = (e) =>{
@@ -40,7 +50,8 @@ const Login = () => {
             axiosInstance.post('/otp/OTPverify',{phoneNumber,countryCode,verificationCode}).then((res)=>{
                 if (res.data.success) {
                     toast.success("Success")
-                    
+                    localStorage.setItem('name',JSON.stringify(name))
+                    localStorage.setItem('phoneNumber',JSON.stringify(phoneNumber))
                     navigate(HOME)
                 }
             })
@@ -57,7 +68,7 @@ const Login = () => {
         <OTPModel showModal={showModal} setShowModal={setShowModal} action={action} 
             verificationCode={verificationCode} setVerificationCode={setVerificationCode}
         />
-        <div className='px-32'>
+        <div className='px-24'>
             <div className='py-6'>
                 <p className='text-5xl text-cyan-400'>Unlock Exclusive Benefits</p>
             </div>
@@ -117,10 +128,10 @@ const Login = () => {
 
             </form>
         </div>
-        <div className='Img px-12'>
-            <p>
-                img
-            </p>
+        <div className='Img px-20'>
+            
+            <img src={celeb} alt="" width={800}/>
+            
         </div>
       </main>
     </>
