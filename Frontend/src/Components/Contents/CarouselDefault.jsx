@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
-import img1 from '../assets/img1.jpg';
-import img2 from '../assets/img2.jpg';
-import img3 from '../assets/img3.jpg';
+import img1 from '../../assets/img1.jpg';
+import img2 from '../../assets/img2.jpg';
+import img3 from '../../assets/img3.jpg';
 
 const CarouselDefault = () => {
     const Images = [
@@ -35,11 +35,11 @@ const CarouselDefault = () => {
 
     return (
         <div style={{ maxWidth: "1200px", width: "100%", margin: '0 auto', position: "relative" }}>
-            <div className='flex'>
+            <div className='flex '>
                 {Images[imgIndex].map((item, index) => (
-                    <div key={index} className='px-4'>
-                        <img src={item.imgURL} alt="" className='img-slider-img' width={300}/>
-                        <p>{item.text}</p>
+                    <div key={index} className='m-4 border-2 rounded-2xl'>
+                        <img src={item.imgURL} alt="" className='img-slider-img rounded-2xl' width={300}/>
+                        <p  className='text-center text-lg font-medium font-serif bg-gradient-to-r from-teal-300 to-indigo-600 bg-clip-text text-transparent'>{item.text}</p>
                     </div>
                 ))}
             </div>

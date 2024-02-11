@@ -1,5 +1,6 @@
 import React from 'react'
-import CarouselDefault from '../../Page/CarouselDefault'
+import CarouselDefault from './CarouselDefault'
+
 
 
 const ImageSlide = () => {
