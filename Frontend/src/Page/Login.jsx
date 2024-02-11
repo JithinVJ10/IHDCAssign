@@ -46,6 +46,7 @@ const Login = () => {
       formIsValid = false;
     }
 
+
     if (!name.trim()) {
       setErrors((prevErrors) => ({ ...prevErrors, name: 'Please enter your name' }));
       setTimeout(() => {
@@ -65,6 +66,7 @@ const Login = () => {
           }
         });
       } catch (error) {
+        toast.error(error.message ||error?.response?.data?.message || 'Network Error')
         console.log(error);
       }
     }
@@ -110,6 +112,7 @@ const Login = () => {
                 type='number'
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
+                maxLength={10}
                 className='border border-gray-300 rounded-full py-2 px-4 ml-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full'
                 
               />
@@ -120,6 +123,7 @@ const Login = () => {
             <label htmlFor='name' className='text-sm mb-1'>NAME</label>
             <input
               type='text'
+              maxLength={30}
               value={name}
               onChange={(e) => setName(e.target.value)}
               className='border border-gray-300 rounded-full py-2 px-4 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full'
@@ -130,6 +134,7 @@ const Login = () => {
             <input
               type='email'
               value={email}
+              maxLength={35}
               onChange={(e) => setEmail(e.target.value)}
               className='border border-gray-300 rounded-full py-2 px-4 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full'
               

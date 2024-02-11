@@ -1,14 +1,38 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { BsPersonFill } from "react-icons/bs";
+import { useNavigate } from 'react-router-dom';
+import { LOGIN } from '../Route/RoutePath';
 
 const NavBar = () => {
     const [nav, setNav] = useState(false);
     const user = JSON.parse(localStorage.getItem('name'))
+
+    const navigate = useNavigate()
+
     // Toggle function to handle the navbar's display
     const handleNav = () => {
         setNav(!nav);
     };
+
+    const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleLogout = ()=>{
+    try {
+        setIsOpen(false);
+        localStorage.removeItem('name')
+        localStorage.removeItem('phoneNumber')
+        setTimeout(()=>{
+            navigate(LOGIN)
+        },2000)
+    } catch (error) {
+        console.log(error)
+    }
+  }
 
     // Array containing navigation items
     const navItems = [
@@ -36,11 +60,29 @@ const NavBar = () => {
                 </ul>
 
                 {/* Person Icon */}
-                <div className='flex'>
+                <div className="relative">
                     <div>
-                    <BsPersonFill className='text-4xl' />
-                    <p>{user}</p>
+
+                    <button
+                        onClick={toggleDropdown}
+                        className=" items-center px-4 py-2  rounded focus:outline-none "
+                    >
+                        <BsPersonFill className="text-4xl mr-2" />
+                        <p>{user}</p>
+                    </button>
                     </div>
+                {isOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md overflow-hidden shadow-xl z-10">
+                    {/* Dropdown content here */}
+                    <a
+                        href="#"
+                        className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                        onClick={()=>handleLogout()}
+                    >
+                        Logout
+                    </a>
+                    </div>
+                )}
                 </div>
 
                 {/* Mobile Navigation Icon */}

@@ -29,7 +29,8 @@ export default function OTPModel({setShowModal,showModal, verificationCode,setVe
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
                   <input 
-                    type="number" 
+                    type="number"
+                    max={10} 
                     value={verificationCode}
                     onChange={(e)=>setVerificationCode(e.target.value)}
                     className="border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
