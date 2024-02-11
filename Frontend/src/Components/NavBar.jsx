@@ -36,7 +36,7 @@ const NavBar = () => {
                 </ul>
 
                 {/* Person Icon */}
-                <div className='flex items-center'>
+                <div className='flex'>
                     <div>
                     <BsPersonFill className='text-4xl' />
                     <p>{user}</p>

@@ -37,8 +37,8 @@ const CarouselDefault = () => {
         <div style={{ maxWidth: "1200px", width: "100%", margin: '0 auto', position: "relative" }}>
             <div className='flex '>
                 {Images[imgIndex].map((item, index) => (
-                    <div key={index} className='m-4 border-2 rounded-2xl'>
-                        <img src={item.imgURL} alt="" className='img-slider-img rounded-2xl' width={300}/>
+                    <div key={index} className='m-4 border-2 rounded-2xl border-teal-500'>
+                        <img src={item.imgURL} alt="" className='img-slider-img rounded-tl-2xl rounded-tr-2xl' width={300}/>
                         <p  className='text-center text-lg font-medium font-serif bg-gradient-to-r from-teal-300 to-indigo-600 bg-clip-text text-transparent'>{item.text}</p>
                     </div>
                 ))}
